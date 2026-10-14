@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16324a"/><stop offset="1" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".25" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="300" height="450" fill="url(#bg)"/>
+  <g stroke="#ffffff" stroke-opacity=".04">
+    <path d="M30 0v450M60 0v450M90 0v450M120 0v450M150 0v450M180 0v450M210 0v450M240 0v450M270 0v450"/>
+  </g>
+  <!-- falling piece -->
+  <g transform="rotate(-12 150 150)">
+    <rect x="120" y="120" width="30" height="30" rx="3" fill="#b06ef3"/>
+    <rect x="90" y="150" width="30" height="30" rx="3" fill="#b06ef3"/>
+    <rect x="120" y="150" width="30" height="30" rx="3" fill="#b06ef3"/>
+    <rect x="150" y="150" width="30" height="30" rx="3" fill="#b06ef3"/>
+  </g>
+  <!-- stack -->
+  <g>
+    <rect x="0" y="300" width="30" height="30" rx="3" fill="#5b8def"/>
+    <rect x="0" y="330" width="30" height="30" rx="3" fill="#5b8def"/>
+    <rect x="30" y="330" width="30" height="30" rx="3" fill="#5b8def"/>
+    <rect x="210" y="300" width="30" height="30" rx="3" fill="#f2c94c"/>
+    <rect x="240" y="300" width="30" height="30" rx="3" fill="#f2c94c"/>
+    <rect x="210" y="330" width="30" height="30" rx="3" fill="#f2c94c"/>
+    <rect x="240" y="330" width="30" height="30" rx="3" fill="#f2c94c"/>
+    <rect x="60" y="330" width="30" height="30" rx="3" fill="#5ad17a"/>
+    <rect x="90" y="330" width="30" height="30" rx="3" fill="#5ad17a"/>
+    <rect x="270" y="330" width="30" height="30" rx="3" fill="#f2617a"/>
+    <rect x="150" y="330" width="30" height="30" rx="3" fill="#f29a4c"/>
+    <rect x="180" y="330" width="30" height="30" rx="3" fill="#f29a4c"/>
+    <rect x="0" y="360" width="30" height="30" rx="3" fill="#f2617a"/>
+    <rect x="30" y="360" width="30" height="30" rx="3" fill="#f2617a"/>
+    <rect x="60" y="360" width="30" height="30" rx="3" fill="#5ad17a"/>
+    <rect x="90" y="360" width="30" height="30" rx="3" fill="#4fd1e8"/>
+    <rect x="120" y="360" width="30" height="30" rx="3" fill="#4fd1e8"/>
+    <rect x="150" y="360" width="30" height="30" rx="3" fill="#4fd1e8"/>
+    <rect x="180" y="360" width="30" height="30" rx="3" fill="#4fd1e8"/>
+    <rect x="210" y="360" width="30" height="30" rx="3" fill="#b06ef3"/>
+    <rect x="240" y="360" width="30" height="30" rx="3" fill="#b06ef3"/>
+    <rect x="270" y="360" width="30" height="30" rx="3" fill="#f2617a"/>
+    <rect x="0" y="390" width="300" height="60" fill="#151f2b"/>
+  </g>
+  <rect x="0" y="390" width="300" height="4" fill="#4fd1e8" fill-opacity=".6"/>
+  <rect width="300" height="450" fill="url(#hi)" opacity=".4"/>
+  <text x="150" y="70" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="40" font-weight="800" letter-spacing="3" fill="#fff">STACKFALL</text>
+  <text x="150" y="98" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="13" letter-spacing="4" fill="#4fd1e8">CLEAR THE ROWS</text>
+</svg>

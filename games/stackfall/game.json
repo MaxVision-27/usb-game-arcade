@@ -1,0 +1,8 @@
+{
+  "title": "Stackfall",
+  "description": "Steer the falling pieces and fill rows to clear them. It gets faster every 10 lines.",
+  "controls": [["← →", "Move"], ["↑ / X", "Rotate"], ["Z", "Rotate back"], ["↓", "Soft drop"], ["Space", "Hard drop"]],
+  "cover": "cover.svg",
+  "version": "1.0.0",
+  "color": "#4fd1e8"
+}

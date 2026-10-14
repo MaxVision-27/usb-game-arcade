@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2614"/><stop offset="1" stop-color="#0d0b09"/></linearGradient>
+    <radialGradient id="rock" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#9a9087"/><stop offset="1" stop-color="#36302b"/></radialGradient>
+    <radialGradient id="glow"><stop offset="0" stop-color="#f2a33a" stop-opacity=".45"/><stop offset="1" stop-color="#f2a33a" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="300" height="450" fill="url(#bg)"/>
+  <circle cx="150" cy="280" r="150" fill="url(#glow)"/>
+  <polygon points="150,170 205,182 245,220 255,272 238,325 196,362 140,370 92,350 58,308 50,256 70,208 105,180" fill="#000" opacity=".35" transform="translate(6 10)"/>
+  <polygon points="150,170 205,182 245,220 255,272 238,325 196,362 140,370 92,350 58,308 50,256 70,208 105,180" fill="url(#rock)"/>
+  <g fill="#f2a33a">
+    <circle cx="112" cy="235" r="13"/><circle cx="190" cy="215" r="9"/><circle cx="205" cy="290" r="14"/>
+    <circle cx="140" cy="318" r="10"/><circle cx="88" cy="292" r="7"/><circle cx="160" cy="262" r="8"/>
+  </g>
+  <g fill="#fff3c4" opacity=".7">
+    <circle cx="108" cy="231" r="4"/><circle cx="187" cy="212" r="3"/><circle cx="200" cy="285" r="4.5"/><circle cx="137" cy="315" r="3"/>
+  </g>
+  <!-- pick -->
+  <g transform="rotate(-35 225 165)">
+    <rect x="219" y="120" width="12" height="110" rx="4" fill="#8a5a2b"/>
+    <path d="M170 128 Q225 96 280 128 L276 136 Q225 112 174 136 Z" fill="#c9ced6"/>
+  </g>
+  <g fill="#ffd27a" font-family="Segoe UI, system-ui, sans-serif" font-weight="700" font-size="18">
+    <text x="60" y="190">+1</text><text x="228" y="350">+4</text>
+  </g>
+  <text x="150" y="70" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="46" font-weight="800" letter-spacing="4" fill="#fff">ORE MILL</text>
+  <text x="150" y="98" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="13" letter-spacing="4" fill="#ffd27a">DIG · BUILD · GET RICH</text>
+  <text x="150" y="420" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="11" letter-spacing="2" fill="#b8a48c">KEEPS MINING WHILE YOU'RE AWAY</text>
+</svg>

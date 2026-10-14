@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#123326"/><stop offset="1" stop-color="#070b09"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1f7a52"/><stop offset="1" stop-color="#8ff5bf"/></linearGradient>
+    <radialGradient id="spark"><stop offset="0" stop-color="#fff6d6"/><stop offset=".35" stop-color="#ffd166"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="300" height="450" fill="url(#bg)"/>
+  <path d="M40 420 C40 330 260 360 250 270 C240 190 60 230 70 160 C78 110 160 120 190 150" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="30" stroke-linecap="round" transform="translate(4 6)"/>
+  <path d="M40 420 C40 330 260 360 250 270 C240 190 60 230 70 160 C78 110 160 120 190 150" fill="none" stroke="url(#body)" stroke-width="30" stroke-linecap="round"/>
+  <path d="M40 420 C40 330 260 360 250 270 C240 190 60 230 70 160 C78 110 160 120 190 150" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="6" stroke-linecap="round" transform="translate(-4 -6)"/>
+  <circle cx="196" cy="150" r="5" fill="#0c1210"/>
+  <circle cx="185" cy="140" r="5" fill="#0c1210"/>
+  <circle cx="232" cy="118" r="40" fill="url(#spark)"/>
+  <circle cx="232" cy="118" r="8" fill="#fff6d6"/>
+  <text x="150" y="70" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="54" font-weight="800" letter-spacing="8" fill="#fff">COIL</text>
+  <text x="150" y="96" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="13" letter-spacing="4" fill="#7ef0b0">EAT · GROW · DON'T CRASH</text>
+</svg>

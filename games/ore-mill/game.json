@@ -1,0 +1,8 @@
+{
+  "title": "Ore Mill",
+  "description": "Mine the rock, buy machines, and watch the ore pile up. Machines keep working while you're away.",
+  "controls": [["Click rock / Space", "Mine"], ["Click machine / 1-7", "Buy"]],
+  "cover": "cover.svg",
+  "version": "1.0.0",
+  "color": "#f2a33a"
+}

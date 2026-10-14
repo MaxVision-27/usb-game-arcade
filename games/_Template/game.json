@@ -1,0 +1,7 @@
+{
+  "title": "My Game",
+  "description": "One or two sentences shown under the cover.",
+  "controls": [["Arrows / WASD", "Move"], ["Mouse", "Pull the square"], ["Space", "Reset score"]],
+  "version": "1.0.0",
+  "color": "#4fc3f7"
+}
