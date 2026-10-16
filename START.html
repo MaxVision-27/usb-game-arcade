@@ -9,6 +9,7 @@
 <body>
 <header>
   <h1>LIBRARY</h1>
+  <select id="layout" title="Library layout"><option value="steam">Steam-style</option><option value="ps">PlayStation-style</option><option value="xbox">Xbox-style</option></select>
   <input id="search" type="search" placeholder="Search games" autocomplete="off">
   <select id="sort"><option value="az">A–Z</option><option value="recent">Recently played</option></select>
   <button id="fav" title="Favorites only">★</button>
@@ -21,9 +22,13 @@
 </header>
 
 <main id="home">
-  <section id="recentWrap"><h2>Recent games</h2><div id="recent" class="shelf"></div></section>
-  <h2>All games <span id="count"></span></h2>
-  <div id="grid" class="grid"></div>
+  <aside id="side"></aside>
+  <div id="shelves">
+    <section id="recentWrap"><h2>Recent games</h2><div id="recent" class="shelf"></div></section>
+    <h2>All games <span id="count"></span></h2>
+    <div id="grid" class="grid"></div>
+  </div>
+  <section id="console" hidden></section>
   <p id="empty" hidden>No games found. Run REBUILD-LIBRARY.bat (or Connect USB → Rescan), then press F5.</p>
 </main>
 

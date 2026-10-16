@@ -61,6 +61,14 @@ Library: search, sort (A-Z / Recently played), the star button shows
 favorites only. Hover a cover and click its star to favorite it. Click a
 cover to play.
 
+Layouts: the box next to LIBRARY switches how the library looks.
+  Steam-style        a list of every game, recent games, a cover grid
+  PlayStation-style  one row of tiles over the selected game's art
+  Xbox-style         a big featured tile over a grid of tiles
+In the PlayStation and Xbox styles, arrow keys (or a controller's d-pad)
+pick a game and Enter (or A) plays it; a second click on a tile plays it.
+Your choice is saved with your saves, so it follows the USB.
+
 Keys in every game:
   Arrows or WASD     move / steer
   Space or Enter     main action

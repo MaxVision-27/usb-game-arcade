@@ -130,6 +130,9 @@ $('#importFile').onchange = async e => {
 const fmt = n => new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(n);
 const title = e => e.game.title || e.id;
 
+const stats = e => { const s = saves[e.id] || {}; return s.last ? 'Best ' + fmt(s.best || 0) + ' · ' + Math.round((s.playtime || 0) / 60) + ' min played' : 'Not played yet'; };
+const coverSrc = e => (e.game.cover ? 'games/' + encodeURIComponent(e.id) + '/' + e.game.cover : null);
+
 function card(e) {
   const g = e.game, s = saves[e.id] || {};
   const el = document.createElement('div');
@@ -148,7 +151,7 @@ function card(e) {
   star.classList.toggle('on', !!s.fav);
   star.onclick = ev => { ev.stopPropagation(); rec(e.id).fav = !rec(e.id).fav; touch(e.id); render(); };
   el.querySelector('b').textContent = title(e);
-  el.querySelector('small').textContent = s.last ? 'Best ' + fmt(s.best || 0) + ' · ' + Math.round((s.playtime || 0) / 60) + ' min played' : 'Not played yet';
+  el.querySelector('small').textContent = stats(e);
   el.querySelector('p').textContent = g.description || '';
   el.onclick = () => play(e.id);
   return el;
@@ -159,13 +162,135 @@ function render() {
   const list = lib.filter(e => (!favOnly || (saves[e.id] || {}).fav) && title(e).toLowerCase().includes(q));
   const last = e => (saves[e.id] || {}).last || 0;
   list.sort($('#sort').value === 'recent' ? (a, b) => last(b) - last(a) || title(a).localeCompare(title(b)) : (a, b) => title(a).localeCompare(title(b)));
+  document.body.className = 'layout-' + layout;
+  $('#layout').value = layout;
+  const steam = layout === 'steam';
+  $('#side').hidden = $('#shelves').hidden = !steam;
+  $('#console').hidden = steam;
+  $('#empty').hidden = lib.length > 0;
+  if (!steam) return renderConsole(list);
+  sideList(list);
   $('#grid').replaceChildren(...list.map(card));
   $('#count').textContent = '(' + list.length + ')';
-  $('#empty').hidden = lib.length > 0;
   const recent = q || favOnly ? [] : lib.filter(last).sort((a, b) => last(b) - last(a)).slice(0, 6);
   $('#recent').replaceChildren(...recent.map(card));
   $('#recentWrap').hidden = !recent.length;
 }
+
+// ---------- layouts ----------
+// Three ways to show the library: Steam-style (a sidebar list, the recent shelf and the cover grid), PlayStation-style
+// (one row of tiles over a big backdrop of the selected game) and Xbox-style (a featured tile over a grid of tiles).
+// The console styles work with the arrow keys and Enter, or a game controller. The choice is kept with the saves
+// (under '_launcher'), so it travels with the USB.
+const LAYOUTS = ['steam', 'ps', 'xbox'];
+let layout = LAYOUTS.includes((saves._launcher || {}).layout) ? saves._launcher.layout : 'steam', sel = 0, shown = [];
+function setLayout(v) {
+  layout = LAYOUTS.includes(v) ? v : 'steam';
+  saves._launcher = { layout, t: Date.now() };
+  store();
+  if (usb && !usbTimer) usbTimer = setTimeout(writeUSB, 5000);
+  render();
+}
+
+function sideList(list) {   // Steam-style: every game as a compact row
+  $('#side').replaceChildren(...list.map(e => {
+    const b = document.createElement('button');
+    b.className = 'side-item';
+    b.style.setProperty('--accent', e.game.color || '#1a9fff');
+    b.innerHTML = '<i></i><span></span>';
+    b.querySelector('span').textContent = title(e);
+    const src = coverSrc(e);
+    if (src) b.querySelector('i').style.backgroundImage = 'url("' + src + '")';
+    b.onclick = () => play(e.id);
+    return b;
+  }));
+}
+
+function art(e, cls) {   // a cover image, or the title on the game's colour when there is none
+  const a = document.createElement('div'), src = coverSrc(e);
+  a.className = cls;
+  a.style.setProperty('--accent', e.game.color || '#1a9fff');
+  const fallback = () => { a.textContent = title(e); a.classList.add('noart'); };
+  if (src) { const img = new Image(); img.alt = ''; img.onerror = () => { img.remove(); fallback(); }; img.src = src; a.append(img); } else fallback();
+  return a;
+}
+function tile(e, i) {
+  const el = document.createElement('div');
+  el.className = 'tile' + (i === sel ? ' sel' : '');
+  el.append(art(e, 'tart'));
+  const b = document.createElement('b');
+  b.textContent = title(e);
+  el.append(b);
+  el.onclick = () => (i === sel ? play(e.id) : select(i));   // first click picks it, a second click plays
+  return el;
+}
+function details(e) {   // title, stats, description, Play and Favorite
+  const d = document.createElement('div'), s = saves[e.id] || {};
+  d.className = 'cinfo';
+  d.innerHTML = '<h2></h2><small></small><p></p><div class="cbtns"><button class="cplay">Play</button><button class="cfav" title="Favorite">★</button></div>';
+  d.querySelector('h2').textContent = title(e);
+  d.querySelector('small').textContent = stats(e);
+  d.querySelector('p').textContent = e.game.description || '';
+  d.querySelector('.cplay').onclick = () => play(e.id);
+  const fav = d.querySelector('.cfav');
+  fav.classList.toggle('on', !!s.fav);
+  fav.onclick = () => { rec(e.id).fav = !rec(e.id).fav; touch(e.id); render(); };
+  return d;
+}
+function renderConsole(list) {
+  shown = list;
+  sel = Math.max(0, Math.min(sel, list.length - 1));
+  const c = $('#console'), e = list[sel];
+  c.className = layout;
+  if (!e) return c.replaceChildren();
+  const bg = art(e, 'cbg');   // the selected game's cover, blurred, behind everything
+  const tiles = document.createElement('div');
+  tiles.append(...list.map(tile));
+  if (layout === 'ps') {
+    tiles.className = 'prow';
+    c.replaceChildren(bg, tiles, details(e));
+  } else {
+    const hero = document.createElement('div'), h3 = document.createElement('h3');
+    hero.className = 'xhero';
+    hero.style.setProperty('--accent', e.game.color || '#1a9fff');
+    hero.append(art(e, 'xart'), details(e));
+    h3.textContent = 'My games (' + list.length + ')';
+    tiles.className = 'xgrid';
+    c.replaceChildren(bg, hero, h3, tiles);
+  }
+  const t = c.querySelector('.tile.sel');
+  if (t) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+function select(i) { sel = i; renderConsole(shown); }
+
+// Arrow keys / d-pad move the selection, Enter / A plays. PlayStation-style is a single row; Xbox-style is a grid.
+function nav(dir) {
+  if (!shown.length) return false;
+  if (dir === 'ok') { play(shown[sel].id); return true; }
+  if (layout === 'ps' && (dir === 'up' || dir === 'down')) return false;
+  const tiles = [...document.querySelectorAll('#console .tile')], cols = Math.max(1, tiles.filter(t => t.offsetTop === tiles[0].offsetTop).length);
+  select(Math.max(0, Math.min(shown.length - 1, sel + { left: -1, right: 1, up: -cols, down: cols }[dir])));
+  return true;
+}
+const KEYNAV = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', Enter: 'ok' };
+let padHeld = '', padNext = 0;
+setInterval(() => {   // game controllers: d-pad or left stick to move, A to play (library only, never during a game)
+  if (current || layout === 'steam' || !navigator.getGamepads) return;
+  const p = [...navigator.getGamepads()].find(Boolean);
+  if (!p) return;
+  const b = i => p.buttons[i] && p.buttons[i].pressed, ax = p.axes[0] || 0, ay = p.axes[1] || 0;
+  const dir = b(0) ? 'ok' : b(14) || ax < -0.6 ? 'left' : b(15) || ax > 0.6 ? 'right' : b(12) || ay < -0.6 ? 'up' : b(13) || ay > 0.6 ? 'down' : '';
+  const now = Date.now();
+  if (dir && (dir !== padHeld || (dir !== 'ok' && now >= padNext))) { nav(dir); padNext = now + (dir === padHeld ? 120 : 400); }
+  padHeld = dir;
+}, 50);
+
+// A clock in the top bar for the console styles.
+const clock = document.createElement('span');
+clock.id = 'clock';
+$('header').append(clock);
+const tick = () => { clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); };
+tick(); setInterval(tick, 15000);
 
 // ---------- player ----------
 const send = m => frame.contentWindow && frame.contentWindow.postMessage(m, '*');
@@ -255,10 +380,12 @@ addEventListener('keydown', e => {
   if (current && e.code === 'Escape') { e.preventDefault(); paused ? resume() : pause(); }
   else if (current && e.code === 'KeyF') fullscreen();
   else if (!current && e.code === 'Escape') { $('#search').value = ''; render(); }
+  else if (!current && layout !== 'steam' && KEYNAV[e.code] && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) && nav(KEYNAV[e.code])) e.preventDefault();
 });
 
 // ---------- wiring ----------
 $('#search').oninput = render;
+$('#layout').onchange = e => { setLayout(e.target.value); e.target.blur(); };
 $('#sort').onchange = render;
 $('#fav').onclick = () => { favOnly = !favOnly; $('#fav').classList.toggle('on', favOnly); render(); };
 $('#usb').onclick = connect;

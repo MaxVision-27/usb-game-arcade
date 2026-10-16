@@ -51,3 +51,72 @@ td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
 
 #boss { position: fixed; inset: 0; z-index: 9; background: #fff; }
 #notes { width: 100%; height: 100%; padding: 48px 12vw; border: 0; outline: 0; resize: none; background: #fff; color: #222; font: 16px/1.7 Calibri, "Segoe UI", sans-serif; }
+
+/* ---------- layouts: body.layout-steam / layout-ps / layout-xbox (picked in the header) ---------- */
+#layout { font-weight: 600; }
+#clock { display: none; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .04em; }
+body:not(.layout-steam) #clock { display: inline; }
+
+/* Steam-style: a sidebar list of every game next to the shelves */
+body.layout-steam #home { display: grid; grid-template-columns: 230px 1fr; gap: 24px; align-items: start; }
+body.layout-steam #empty { grid-column: 1 / -1; }
+#side { position: sticky; top: 64px; max-height: calc(100vh - 84px); overflow-y: auto; padding: 6px 0; background: #0e141bcc; border-radius: 4px; }
+.side-item { display: flex; gap: 10px; align-items: center; width: 100%; padding: 6px 12px; border: 0; border-radius: 0; background: none; text-align: left; color: var(--text); }
+.side-item:hover { background: #3d4450; color: #fff; }
+.side-item i { flex: none; width: 28px; height: 28px; border-radius: 3px; background: var(--accent) center top / cover; }
+.side-item span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+@media (max-width: 760px) { body.layout-steam #home { display: block; } #side { display: none; } }
+
+/* shared by the console styles */
+.tart, .xart { position: relative; overflow: hidden; background: var(--accent); }
+.tart img, .xart img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.noart { display: grid; place-items: center; padding: 8px; text-align: center; font-weight: 700; color: #fff; background: linear-gradient(160deg, var(--accent), #0b0f14); }
+.cbg { position: fixed; inset: 0; z-index: -1; background: var(--accent); }
+.cbg img { width: 100%; height: 100%; object-fit: cover; filter: blur(32px) brightness(.4) saturate(1.2); transform: scale(1.15); }
+.cbg.noart { color: transparent; }
+.tile { cursor: pointer; }
+.cinfo h2 { margin: 0 0 6px; text-transform: none; letter-spacing: 0; color: #fff; }
+.cinfo small { color: #c4ccd8; }
+.cinfo p { max-width: 560px; margin: 12px 0 18px; color: #d5dce6; line-height: 1.5; }
+.cbtns { display: flex; gap: 10px; align-items: center; }
+.cplay { min-width: 150px; padding: 11px 30px; font-size: 16px; font-weight: 700; }
+.cfav { width: 44px; height: 44px; padding: 0; font-size: 18px; color: #fffa; }
+.cfav.on { color: #ffc82c; }
+
+/* PlayStation-style: deep blue, one row of rounded tiles, the selected one big with a bright frame */
+body.layout-ps { background: radial-gradient(120% 90% at 70% 0, #1d3a7a 0, #0a1630 55%, #050a18) fixed; }
+body.layout-ps header { background: #050a18aa; border-bottom: 0; backdrop-filter: blur(6px); }
+body.layout-ps main { padding-top: 6vh; }
+.prow { display: flex; gap: 16px; align-items: flex-end; overflow-x: auto; padding: 30px 12px 26px; scrollbar-width: none; }
+.prow .tile { flex: none; width: 104px; transition: width .2s; }
+.prow .tart { aspect-ratio: 1; border-radius: 14px; box-shadow: 0 6px 18px #0009; }
+.prow .tile b { display: block; margin-top: 10px; overflow: hidden; color: #fff; font-size: 13px; white-space: nowrap; text-overflow: ellipsis; opacity: 0; }
+.prow .tile.sel { width: 156px; }
+.prow .tile.sel .tart { outline: 3px solid #fff; outline-offset: 4px; box-shadow: 0 0 34px #ffffff55; }
+.prow .tile.sel b { opacity: 1; font-size: 15px; }
+.prow .tile:not(.sel):hover .tart { outline: 2px solid #ffffff88; outline-offset: 3px; }
+.ps .cinfo { padding: 4vh 12px 0; }
+.ps .cinfo h2 { font-size: 40px; font-weight: 300; }
+.ps .cplay { border: 0; border-radius: 999px; background: #fff; color: #0a1630; }
+.ps .cplay:hover { background: #dfe7ff; }
+.ps .cfav { border-radius: 50%; background: #ffffff22; border: 0; }
+
+/* Xbox-style: charcoal, a featured hero tile in the game's colour, then a grid of square tiles; green accents */
+body.layout-xbox { background: linear-gradient(180deg, #1f2321 0, #121413 380px, #0c0d0c) fixed; }
+body.layout-xbox header { background: #0c0d0cee; border-bottom: 1px solid #2c312e; }
+.xbox .cbg img { filter: blur(40px) brightness(.25); }
+.xhero { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 28px; align-items: end; padding: 22px; margin-bottom: 26px; border-radius: 8px; background: linear-gradient(115deg, var(--accent) 0, #00000066 55%, #000000aa); box-shadow: 0 12px 40px #000a; }
+.xart { aspect-ratio: 2 / 3; border-radius: 6px; box-shadow: 0 8px 24px #000a; }
+.xbox .cinfo h2 { font-size: 34px; font-weight: 700; }
+.xbox .cplay { border: 0; border-radius: 4px; background: #2fa84f; color: #fff; }
+.xbox .cplay:hover { background: #3cc260; }
+.xbox .cfav { border-radius: 4px; background: #ffffff1a; border: 0; }
+.xbox h3 { margin: 0 0 12px; font-size: 16px; font-weight: 600; color: #fff; }
+.xgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.xgrid .tile { position: relative; transition: transform .12s; }
+.xgrid .tart { aspect-ratio: 1; border-radius: 6px; }
+.xgrid .tile b { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 10px 8px; overflow: hidden; border-radius: 0 0 6px 6px; background: linear-gradient(transparent, #000c); color: #fff; font-size: 13px; white-space: nowrap; text-overflow: ellipsis; }
+.xgrid .tile.sel { transform: scale(1.05); z-index: 1; }
+.xgrid .tile.sel .tart { outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 6px #2fa84f66, 0 10px 30px #000c; }
+.xgrid .tile:not(.sel):hover .tart { outline: 2px solid #2fa84f; outline-offset: 2px; }
+@media (max-width: 640px) { .xhero { grid-template-columns: 1fr; } .xart { max-width: 180px; } }

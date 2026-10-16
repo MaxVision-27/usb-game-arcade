@@ -3,6 +3,7 @@
 A small game arcade that runs straight from a USB drive. Double-click `START.html` and play. No internet, no install, no admin rights, and no server. It works in Chrome or Edge on Windows.
 
 - Library with covers, search, sorting, favorites, and a "Recent games" row
+- Three library layouts to pick from: Steam-style, PlayStation-style, or Xbox-style (arrow keys and game controllers work in the console styles)
 - Best scores and play time on every game
 - Progress is saved **on the USB**, so it follows you between computers
 - Every game pauses with Esc and has a fullscreen mode (F)
